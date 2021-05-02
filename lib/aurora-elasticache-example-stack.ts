@@ -39,7 +39,9 @@ export class AuroraElasticacheExampleStack extends cdk.Stack {
       dbProxy: auroraCluster.dbProxy,
       secretsSG: sharedServices.secretsSG,
       vpc: sharedServices.vpc,
+      cacheCluster: redisCluster.redisCluster,
+      cacheSG: redisCluster.cacheSG,
     });
-    
+
   }
 }

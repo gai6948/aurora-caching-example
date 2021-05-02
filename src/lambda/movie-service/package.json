@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.897.0",
+    "ioredis": "^4.27.1",
     "postgres": "^1.0.2"
   }
 }

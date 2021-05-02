@@ -1,4 +1,0 @@
-SELECT *
-FROM movies
-ORDER BY popularity DESC
-LIMIT 10 OFFSET 0;

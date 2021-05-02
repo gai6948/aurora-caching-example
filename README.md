@@ -1,14 +1,29 @@
-# Welcome to your CDK TypeScript project!
+# Database caching example with ElastiCache Redis and Amazon Aurora
 
-This is a blank project for TypeScript development with CDK.
+This is an example applicaion showing how to use ElastiCache for Redis to accelerate database queries.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Arcihtecture
 
-## Useful commands
+<img src="docs/arch.png" alt="architecture diagram" />
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+## Deployment
+
+* In `bin/aurora-elasticache-example.ts`, enter your AWS account Id
+
+* Run `cdk deploy --require-approval never`
+
+* Log into the Bastion EC2, run the SQL files at `src/setup-db`, this should load your DB with dummy data
+
+## Test the API
+
+In CloudFormation console, note the API Gateway URL, use curl to launch a request to the `popularMovies` path, example like so:
+```
+curl https://xxxxxxx.execute-api.ap-northeast-1.amazonaws.com/popularMovies
+```
+
+This API displays the top 10 popular movies from the databse.
+
+Test it twice within a minute, results can be different, if there is a cache miss, the results from Aurora Postgres is saved into Redis as base64-encoded String with 60s TTL, so the next request within a minute will hit the cache.
+
+<b>Note the difference below:</b>
+<img src="doc/../docs/execTime.png" />
